@@ -3,16 +3,32 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{subfiles}
+
+\fancyhead{}
+\fancyfoot{}
+
+\lhead{SYT}
+\chead{Benutzerverwaltung}
+\rhead{09.12.2014}
+
+\lfoot{Hackenberger, Hollander, Kalauner}
+\rfoot{\thepage\ / \pageref{LastPage}}
 
 \begin{document}
 
 	\begin{titlepage}
 		\subfile{title}
 	\end{titlepage}
-
-	\section{Introduction}
-	\subfile{introduction}
+	
+	\tableofcontents
+	\newpage
+	
+	\section{Aufgabenstellung}
+	\subfile{aufgabenstellung}
 
 \end{document}
