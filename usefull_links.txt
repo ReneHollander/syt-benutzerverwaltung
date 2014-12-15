@@ -1,0 +1,1 @@
+LDAP + NFS: http://www.fclose.com/39544/unified-linux-login-and-home-directory-using-openldap-and-nfsautomount/
