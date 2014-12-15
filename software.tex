@@ -3,6 +3,24 @@
 \begin{document}
 
 \subsection{OpenLDAP}
+OpenLDAP ist eine Implementierung des LDAP, die als freie Software unter der, BSD-Lizenz ähnlichen, 
+OpenLDAP Public License veröffentlicht wird. OpenLDAP ist Bestandteil der meisten aktuellen
+Linux-Distributionen und läuft auch unter verschiedenen Unix-Varianten, Mac OS X und verschiedenen Windows-Versionen.
+Da OpenLDAP den LDAP-Standard verfolgt, ist es mit OpenLDAP möglich,
+eine zentrale Benutzerdatenverwaltung aufzubauen und zentral zu warten.
+\\\\
 Kosten: Gratis (OpenLDAP Public License)
+\\\\
+\textbf{Vergleich zu anderen Lösungen}
+Da OpenLDAP die Referenzimplementierung des Protokolls ist, werden Schemadateien sorgfältig
+auf Protokollkonformität geprüft. Dies führt gelegentlich zu Fehlermeldungen, wenn mangelhafte Schemadateien,
+die von Directory Server Agents (DSA) anderer Hersteller akzeptiert werden, in ein OpenLDAP System übertragen werden.
+
+Durch die Bereitstellung unterschiedlicher Backends und Overlays lassen sich Protokollerweiterungen und
+erweiterte Operationen (extended Operations) sehr leicht realisieren. Das SQL Backend leitet die
+Suchergebnisse einer RDBM-Suche an den DSA weiter, so dass der auftraggebende LDAP Client ein
+protokollgerechtes Datenpaket empfängt.
+ \\\\
+ Active Directory scheidet aus da es nur für Windows verfügbar ist.
 
 \end{document}
