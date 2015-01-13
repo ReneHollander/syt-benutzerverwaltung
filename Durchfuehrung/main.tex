@@ -1,0 +1,39 @@
+\documentclass[12pt]{article}
+\usepackage[english, ngerman]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{eurosym}
+\pagestyle{fancy}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{subfiles}
+\usepackage{tabularx}
+
+\fancyhead{}
+\fancyfoot{}
+
+\lhead{SYT}
+\chead{Benutzerverwaltung}
+\rhead{\the\day.\the\month.\the\year}
+
+\lfoot{Hackenberger, Hollander, Kalauner}
+\rfoot{\thepage\ / \pageref{LastPage}}
+
+\begin{document}
+
+	\begin{titlepage}
+		\subfile{title}
+	\end{titlepage}
+	
+	\tableofcontents
+	\newpage
+	
+	\section{Aufgabenstellung}
+	\subfile{aufgabenstellung}
+
+	\section{VM Einrichten}
+	\subfile{vm_setup}
+	
+\end{document}
