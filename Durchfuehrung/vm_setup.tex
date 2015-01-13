@@ -1,7 +1,22 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\subsection{Iwas}
+\subsection{Image}
 
+Debian Jessy (Testing)
+
+\subsection{Ausgeführte Schritte}
+\begin{enumerate}
+	\item \textit{apt sources.list} auf Debian Testing geändert
+	\item \textit{apt-get update}
+	\item \textit{apt-get dist-upgrade}
+	\item \textit{reboot}
+	\item \textit{apt-get install gcc g++ make binutils build-essentials cmake ntpdate linux-headers-\$(uname -r) lxc}
+	\item \textit{ntpdate 0.at.pool.ntp.org}
+	\item \textit{apt-get install ntp}
+	\item VMWare Guest Tools nach folgender Anleitung installieren: \\ \url{https://		www.vmware.com/support/ws55/doc/ws_newguest_tools_linux.html} 
+	\item Den bei der Installation angelegten User zur Gruppe sudo hinzufügen
+	\item Zum erstellten User wechseln
+\end{enumerate}
 
 \end{document}
