@@ -1,22 +1,52 @@
 \documentclass[main.tex]{subfiles}
+
+\usepackage{listings}
+
 \begin{document}
 
-\subsection{Image}
-
-Debian Jessy (Testing)
+Um die Einrichtung so einfach wie möglich zu verwenden wird Puppet verwendet. Um vom Betriebssystem unabhänging daran zu arbeiten, verwenden wir Vagrant.
 
 \subsection{Ausgeführte Schritte}
 \begin{enumerate}
-	\item \textit{apt sources.list} auf Debian Testing geändert
-	\item \textit{apt-get update}
-	\item \textit{apt-get dist-upgrade}
-	\item \textit{reboot}
-	\item \textit{apt-get install gcc g++ make binutils build-essentials cmake ntpdate linux-headers-\$(uname -r) lxc}
-	\item \textit{ntpdate 0.at.pool.ntp.org}
-	\item \textit{apt-get install ntp}
-	\item VMWare Guest Tools nach folgender Anleitung installieren: \\ \url{https://		www.vmware.com/support/ws55/doc/ws_newguest_tools_linux.html} 
-	\item Den bei der Installation angelegten User zur Gruppe sudo hinzufügen
-	\item Zum erstellten User wechseln
+	\item Vagrant installieren (siehe Webseite)
+	\item Mit \textit{vagrant init ubuntu/trusty64} ein neues Vagrant Enviroment erstellen.
+	\item das \textit{Vagrantfile} umit folfende Zeilen erweitern: 
+	\begin{lstlisting}
+config.vm.provision :puppet do |puppet|
+  puppet.manifests\_path = "manifests"
+  puppet.module\_path = ["modules-contrib","modules-custom"]
+end
+	\end{lstlisting}
+	\item Ordner anlegen: \textit{manifests}, \textit{modules-contrib} und \textit{modules-custom}
+	\item Datei mit folgenden Inhalt anlegen: \textit{manifests/default.pp}
+		\begin{lstlisting}
+Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
+
+include system-update
+
+class { 'openldap::server':
+  databases => {
+    'dc=megaldap,dc=com' => {
+      ensure => present,
+      rootdn    => 'cn=root,dc=megaldap,dc=com',
+      rootpw    => '{SSHA}LMhUx6cKrXXCv9RHHvjkUhrSJGJQeJbm',
+    }
+  }
+}
+		\end{lstlisting}
+		Ein Passwort kann mit dem Kommando \textit{slappasswd} im Debian Paket \textit{slapd} gehasht werden.
+		\item Datei mit folgenden Inhalt anlegen:
+		\textit{modules-custom/system-update/manifests/init.pp}
+		\begin{lstlisting}
+class system-update {
+  exec { 'system-update':
+    command => 'apt-get update; apt-get dist-upgrade -y',
+    logoutput => true,
+  }
+}
+		\end{lstlisting}
+		\item Puppet Modul \textit{camptocamp-openldap} mithilfe von Puppet in den Ordner \textit{modules-contrib} installieren:\\ \textit{puppet module install --modulepath=modules-contrib/ camptocamp-openldap}
+		\item Mit dem Befehl \textit{vagrant up} VM starten und provisionieren. Wenn die VM gestartet ist, kann mit \textit{vagrant ssh} per SSH auf die VM zugegriffen werden.
 \end{enumerate}
 
 \end{document}
