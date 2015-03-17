@@ -108,5 +108,6 @@ sympy-plots-for-*.tex/
 *.xdy
 
 main.pdf
+main.ps
 *.texnicle
 /.DS_Store
