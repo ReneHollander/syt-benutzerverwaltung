@@ -3,4 +3,3 @@
 mkdir -p modules-contrib/
 puppet module install --modulepath=modules-contrib/ camptocamp-openldap
 puppet module install --modulepath=modules-contrib/ spantree-phpldapadmin
-puppet module install --modulepath=modules-contrib/ thias-samba
