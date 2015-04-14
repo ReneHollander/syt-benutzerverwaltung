@@ -47,4 +47,24 @@ class system-update {
 		\item Mit dem Befehl \textit{vagrant up} VM starten und provisionieren. Wenn die VM gestartet ist, kann mit \textit{vagrant ssh} per SSH auf die VM zugegriffen werden.
 \end{enumerate}
 
+\subsection{phpLDAPadmin}
+Um die Konfiguration zu erleichtern, haben wir das Puppet-Modul phpLDAPadmin zur 
+Provisionierung hinzugefügt:
+
+\begin{lstlisting}  
+class { 'phpldapadmin':
+  ldap_host      => 'localhost',
+  ldap_suffix    => 'dc=megaldap,dc=com',
+  ldap_bind_id   => 'cn=admin,dc=megaldap,dc=com',
+  ldap_bind_pass => 'bigboss123',
+}
+->
+exec { "phpldapadmin-fix":
+    command => "sudo sed -i 's/password_hash/password_hash_custom/' /usr/share/phpldapadmin/lib/TemplateRender.php"
+}
+\end{lstlisting}
+
+\subsection{Filesharing}
+Um das Filesharing zu realisieren verwenden wir Samba
+
 \end{document}
