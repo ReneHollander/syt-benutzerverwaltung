@@ -18,7 +18,8 @@ end
 	\item Ordner anlegen: \textit{manifests}, \textit{modules-contrib} und \textit{modules-custom}
 	\item Datei mit folgenden Inhalt anlegen: \textit{manifests/default.pp}
 		\begin{lstlisting}
-Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
+Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", 
+"/usr/sbin/" ] }
 
 include system-update
 
@@ -60,7 +61,8 @@ class { 'phpldapadmin':
 }
 ->
 exec { "phpldapadmin-fix":
-    command => "sudo sed -i 's/password_hash/password_hash_custom/' /usr/share/phpldapadmin/lib/TemplateRender.php"
+    command => "sudo sed -i 's/password_hash/password_hash_custom/' 
+    /usr/share/phpldapadmin/lib/TemplateRender.php"
 }
 \end{lstlisting}
 
@@ -115,10 +117,52 @@ class { '::samba::server':
 
 \subsection{Mailserver}
 
-Mailname: mail.megaldap.com
+Installationsanleitung (abgerufen am 5.5.2015) :
+
+\url{http://www.iredmail.org/docs/install.iredmail.on.debian.ubuntu.html}
+\\\\
+LDAP-Suffix: dc=megaldap,dc=com\\
+Faild2ban nicht installieren!!!
+\\\\
+Login-Daten für Webmail:\\
+Username: postmaster@megaldap.com\\
+Passwort: bigboss123
+\newpage
+\subsection{DNS}
+
+db.com.megaldap (Zone-File):
+\begin{lstlisting}
+$ORIGIN megaldap.com.
+$TTL 604800
+@       IN      SOA     server.megaldap.com. admin.megaldap.com. (
+                                5       ; Serial
+                           604800       ; Refresh
+                            86400       ; Retry
+                          2419200       ; Expire
+                           604800 )     ; Negative Cache TTL
+@       IN      NS      server.megaldap.com.
+server  IN      A       192.168.1.10
+@       IN      A       192.168.1.10
+www     IN      CNAME   @
+\end{lstlisting}
+\leavevmode \\
+/etc/bind/named.conf.local:
 
 \begin{lstlisting}
-  sudo apt-get install postfix
+zone "megaldap.com" {
+        type master;
+        file "/etc/bind/db.com.megaldap";
+};
 \end{lstlisting}
+
+\subsection{Links}
+
+\begin{itemize}
+  \item{Webmail: \url{http://megaldap.com/mail}}
+  \item{WebAdmin-Panel:  \url{htttp://megaldap.com/iredadmin}}
+  \item{phpLDAPAdmin: \url{http://megaldap.com/phpldapadmin}}
+\end{itemize}
+
+Achtung: Um diese Links verwenden zu könne muss der DNS Server (192.168.1.10) verwendet werden.
 
 \end{document}
